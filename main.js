@@ -1,5 +1,9 @@
+const numOfUsers = prompt(
+  "Enter number of players:"
+);
+
 const bingo = document.querySelector("#bingo");
-const user = document.querySelector("#user");
+const users = document.querySelector("#users");
 
 // Building bingo table
 for (let i = 0; i < 76; i++) {
@@ -10,9 +14,13 @@ for (let i = 0; i < 76; i++) {
 }
 
 // Building users bingo table
-for (let i = 0; i < 24; i++) userCell();
+for (let i = 0; i < numOfUsers; i++) {
+  const table = document.createElement("div");
+  users.appendChild(table);
+  for (let j = 0; j < 24; j++) userCell(i);
+}
 
-function userCell() {
+function userCell(index) {
   // Select random cell from bingo table
   const cell =
     bingo.children[
@@ -22,27 +30,33 @@ function userCell() {
     ];
 
   // Check if bingo cell already exists
-  const dup = [...user.children].find(
+  const dup = [
+    ...users.children[index].children,
+  ].find(
     (el) => el.textContent === cell.innerText
   );
 
   // If it does, return and try again
-  if (dup) return userCell();
+  if (dup) return userCell(index);
 
   // Clone selected cell
   const copy = cell.cloneNode(true);
 
   copy.classList.add("cell");
 
-  user.appendChild(copy);
+  users.children[index].appendChild(copy);
 
   //  If it's the last call, sort the numbers
-  if (user.children.length === 24) {
-    [...user.children]
+  if (
+    users.children[index].children.length === 24
+  ) {
+    [...users.children[index].children]
       .sort((a, b) =>
         +a.innerText > +b.innerText ? 1 : -1
       )
-      .forEach((node) => user.appendChild(node));
+      .forEach((node) =>
+        users.children[index].appendChild(node)
+      );
   }
 }
 
@@ -69,10 +83,16 @@ function addNumber() {
   // Add selected class to all tables it
   selection.classList.add("selected");
 
-  const userCell = [...user.children].find(
-    (el) => el.textContent === selection.innerText
-  );
+  // Loop through all players and select the number
+  for (let i = 0; i < numOfUsers; i++) {
+    const userCell = [
+      ...users.children[i].children,
+    ].find(
+      (el) =>
+        el.textContent === selection.innerText
+    );
 
-  if (userCell)
-    userCell.classList.add("selected");
+    if (userCell)
+      userCell.classList.add("selected");
+  }
 }

@@ -9,6 +9,10 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+h1 {
+  margin-top: 1rem;
+}
+
 #bingo {
   margin: 1rem 0;
   display: grid;
@@ -16,7 +20,7 @@ body {
   margin-right: 0.5rem;
 }
 
-#user {
+#users > div {
   margin: 1rem 0;
   display: grid;
   grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
@@ -24,14 +28,6 @@ body {
 }
 
 .cell {
-  padding: 1rem;
-  margin: 0.25rem;
-  text-align: center;
-  background-color: rgb(255, 208, 78);
-  border-radius: 0.25rem;
-}
-
-.cell-user {
   padding: 1rem;
   margin: 0.25rem;
   text-align: center;
